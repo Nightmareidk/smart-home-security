@@ -49,10 +49,10 @@ In another terminal, make things happen:
 Add `--speed 5` to the first command to make everything happen five times faster.
 For a quick mold-risk demo set `HOME_MOLD_HOLD_SECONDS=10` in `backend/.env`.
 
-## 4. App
+## 4. Frontend (phone app)
 
 ```bash
-cd app
+cd frontend
 npm install
 npx expo start
 ```

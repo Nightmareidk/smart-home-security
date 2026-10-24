@@ -1,10 +1,11 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput } from 'react-native';
 
 import { Button, Card, Label, Muted, Screen, Title } from '@/components/ui';
 import { ApiError, createApi } from '@/lib/api';
 import { useConnection } from '@/lib/connection';
+import { versionLabel } from '@/version';
 import { colors, radius } from '@/theme';
 
 export default function Settings() {
@@ -14,6 +15,14 @@ export default function Settings() {
   const [token, setToken] = useState(config?.token ?? '');
   const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+
+  // The saved values load a moment after the first draw, so copy them in when they arrive.
+  useEffect(() => {
+    if (config) {
+      setUrl(config.url);
+      setToken(config.token);
+    }
+  }, [config]);
 
   const valid = /^https?:\/\/.+/i.test(url.trim()) && token.trim().length > 0;
 
@@ -74,6 +83,7 @@ export default function Settings() {
       <Button label={busy ? 'Testing…' : 'Test connection'} tone="quiet" disabled={!valid || busy} onPress={test} />
       <Button label="Save" disabled={!valid || busy} onPress={save} />
       {config ? <Button label="Close" tone="quiet" onPress={() => router.back()} /> : null}
+      <Muted>Smart Home · {versionLabel()}</Muted>
     </Screen>
   );
 }

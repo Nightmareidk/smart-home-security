@@ -14,6 +14,7 @@ from .db import Database
 from .hub import CommandFailed, CommandRefused, Hub
 from .models import ActuatorCommand, ActuatorName, ArmedCommand, DoorCommand, LabResult
 from .mqtt import MqttBridge
+from .version import __version__
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("home")
@@ -43,7 +44,7 @@ async def lifespan(app: FastAPI):
             bridge.stop()
 
 
-app = FastAPI(title="Smart Home Security", version="0.1.0", lifespan=lifespan, docs_url="/docs" if settings.env == "dev" else None, redoc_url=None, openapi_url="/openapi.json" if settings.env == "dev" else None)
+app = FastAPI(title="Smart Home Security", version=__version__, lifespan=lifespan, docs_url="/docs" if settings.env == "dev" else None, redoc_url=None, openapi_url="/openapi.json" if settings.env == "dev" else None)
 
 if settings.cors_origins:
     app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins, allow_methods=["GET", "POST"], allow_headers=["Authorization", "Content-Type"])
@@ -87,7 +88,7 @@ HubDep = Annotated[Hub, Depends(get_hub)]
 @app.get("/api/health")
 async def health(hub: HubDep):
     bridge = app.state.bridge
-    return {"ok": True, "mqtt": bool(bridge and bridge.connected)}
+    return {"ok": True, "mqtt": bool(bridge and bridge.connected), "version": __version__}
 
 
 @app.get("/api/state", dependencies=[Auth])

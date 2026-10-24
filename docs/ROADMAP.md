@@ -5,7 +5,7 @@
 | Track | Who | Works in |
 |---|---|---|
 | Hardware | 2 computer engineers | `firmware/`, `hardware/` |
-| Software | 2 software engineers | `backend/`, `app/`, `ai/`, `simulator/` |
+| Software | 2 software engineers | `backend/`, `frontend/`, `ai/`, `simulator/` |
 | Molecular | 1 molecular biologist | `molecular/` |
 
 Each track works on its own first. When they are done, the software goes onto the hardware
@@ -42,7 +42,7 @@ Everything we build works on the simulator first.
 Done when: the simulator's fake readings show up in the server and are saved.
 
 ### S2: The app
-- [x] `app/`: sensor numbers, alerts, door lock and unlock, lights, plants, armed switch (placeholder look).
+- [x] `frontend/`: sensor numbers, alerts, door lock and unlock, lights, plants, armed switch (placeholder look).
 - [ ] Check it on a real phone (so far tried in a browser).
 - [x] A form where the molecular student enters her final result (detected, not detected, notes).
 

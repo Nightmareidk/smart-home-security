@@ -1,4 +1,4 @@
-# App
+# Frontend (phone app)
 
 The phone app that controls the house (React Native with Expo, TypeScript).
 
