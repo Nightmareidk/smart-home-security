@@ -4,7 +4,7 @@
 
 ```
  ESP32-CAM  --video-->  Laptop AI (YOLO, face)  --events-->  MQTT broker
- Door node (T-Display S3)  <---- MQTT ---->  Server (Flask + database)  <---->  Dashboard (web page)
+ Door node (T-Display S3)  <---- MQTT ---->  Server (Flask + database)  <---->  App (web page)
  Plant node (C3 Super Mini)  <---- MQTT ---->        ^
                                                      |
  Jarvis (voice) -------------------------------------+
@@ -13,19 +13,19 @@
 - **MQTT** is a message system. Each board sends short messages with a topic name (like a mailbox label).
   Anything that cares about that topic receives it.
 - **The server** listens to all messages, saves them in a database, applies the alert rules and
-  pushes updates to the dashboard.
+  pushes updates to the app.
 - **The AI programs** run on the laptop and talk to the server through the same messages.
 
 ## Devices
 
 | Device | Job |
 |---|---|
-| ESP32-S3 T-Display (owned) | Door node: fingerprint, keypad, lock, buzzer, status screen |
-| ESP32-C3 Super Mini (owned) | Plant node: BME680, soil sensors, pump, grow light, humidifier, fan, clap microphone |
+| ESP32-S3 T-Display | Door node: fingerprint, keypad, lock, buzzer, status screen |
+| ESP32-C3 Super Mini | Plant node: BME680, soil sensors, pump, grow light, humidifier, fan, clap microphone |
 | ESP32-CAM | Camera for the door and room |
-| Laptop | Server, database, dashboard, camera AI, face recognition, Jarvis |
+| Laptop | Server, database, app, camera AI, face recognition, Jarvis |
 
-## Message names (draft)
+## Message names (the contract between hardware and software; draft, agree it together)
 
 | Topic | Sent by | Example content |
 |---|---|---|
@@ -59,7 +59,7 @@
 | Boards | Arduino IDE, C++ |
 | Messages | Mosquitto (MQTT) |
 | Server | Python, Flask, SQLite |
-| Dashboard | A web page served by the server, updated live |
+| App | A web page served by the server, updated live |
 | Camera AI | Python, OpenCV, YOLO |
 | Faces | A Python face recognition library |
 | Jarvis | Whisper (speech to text), a language model, Piper (voice) |

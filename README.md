@@ -18,7 +18,7 @@ warm area reaches the conditions where mold grows, and has a voice assistant cal
 | Jarvis voice assistant | Talk to the house. It answers questions and does things. |
 | Plant care | Sensors check the soil. A pump waters and a light runs on a timer. |
 | Mold-risk alert | A bathroom corner is made damp and warm. The system spots it and raises an alert. |
-| Dashboard and alerts | One web page shows the camera, sensors, history and alerts. |
+| App and alerts | One app shows the camera, sensors, history and alerts. |
 
 ## Folders
 
@@ -28,12 +28,15 @@ warm area reaches the conditions where mold grows, and has a voice assistant cal
 | `firmware/` | Code that runs on the ESP32 boards (door, plant and camera nodes) |
 | `backend/` | The server that collects data, stores it and sends alerts |
 | `ai/` | Camera AI (`vision`), face recognition (`face`) and the voice assistant (`jarvis`) |
-| `dashboard/` | The web page you look at |
+| `app/` | The app that controls the house and shows what is happening |
+| `simulator/` | Pretends to be the boards, so software can be built before the parts arrive |
 | `hardware/` | Wiring notes and pin maps |
+| `molecular/` | The molecular biology experiment and write-up |
 
 ## Where to start
 
-Read `docs/ROADMAP.md`. It lists the steps in order, and the first ones need no new parts.
+Read `docs/ROADMAP.md` and `CONTRIBUTING.md`. Hardware and software are built separately
+and joined at the end, using the message contract in `docs/ARCHITECTURE.md`.
 
 ## Documents
 
@@ -43,5 +46,6 @@ Read `docs/ROADMAP.md`. It lists the steps in order, and the first ones need no 
 
 ## Team
 
-- Computer engineering: ESP32 boards, camera, sensors, AI
-- Software engineering: server, dashboard, messaging, alerts
+- Computer engineering (2): the boards, sensors, camera and model house
+- Software engineering (2): server, app, camera AI, Jarvis
+- Molecular biology (1): the final mold experiment
