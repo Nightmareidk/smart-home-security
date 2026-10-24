@@ -32,25 +32,25 @@ sensor readings and reacts to commands, using the same messages the real boards 
 Everything we build works on the simulator first.
 
 ### S0: Setup
-- [ ] Both clone the repo. Install Python 3.11+ and Mosquitto (the message broker).
+- [x] Both clone the repo. Install Python 3.11+ and Node (the message broker for development is built in; Mosquitto comes later).
 - [ ] Read `CONTRIBUTING.md` (how we avoid stepping on each other).
 
 ### S1: Simulator and server
-- [ ] `simulator/`: fake door node and fake plant node, following the contract.
-- [ ] `backend/`: receives messages, saves them, applies alert rules, sends live updates.
+- [x] `simulator/`: fake door node, plant node and camera, following the contract.
+- [x] `backend/`: receives messages, saves them, applies alert rules, sends live updates.
 
 Done when: the simulator's fake readings show up in the server and are saved.
 
 ### S2: The app
-- [ ] `app/`: sensor numbers, alerts, door lock and unlock, lights, plants, armed switch.
-- [ ] Works on a phone screen.
-- [ ] A form where the molecular student enters her final result (detected, not detected, notes).
+- [x] `app/`: sensor numbers, alerts, door lock and unlock, lights, plants, armed switch (placeholder look).
+- [ ] Check it on a real phone (so far tried in a browser).
+- [x] A form where the molecular student enters her final result (detected, not detected, notes).
 
 Done when: pressing "turn on light" in the app makes the simulator react, and the simulator's
 mold-risk numbers raise an alert in the app.
 
 ### S3: Alert rules
-- [ ] Mold risk, fire, intrusion, thirsty plant, repeated failed unlocks.
+- [x] Mold risk, fire, intrusion, thirsty plant, repeated failed unlocks, board offline.
 - [ ] Alert history and a phone notification (Telegram).
 
 ### S4: Camera AI (laptop webcam first)

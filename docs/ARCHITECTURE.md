@@ -25,22 +25,10 @@
 | ESP32-CAM | Camera for the door and room |
 | Laptop | Server, database, app, camera AI, face recognition, Jarvis |
 
-## Message names (the contract between hardware and software; draft, agree it together)
+## Messages
 
-| Topic | Sent by | Example content |
-|---|---|---|
-| `home/env/bathroom` | plant node | temperature, humidity, air quality |
-| `home/plant/soil` | plant node | soil moisture per plant |
-| `home/plant/pump/command` | server or Jarvis | on or off |
-| `home/light/command` | server, Jarvis or clap | on, off or toggle |
-| `home/fan/command` | server or Jarvis | on or off |
-| `home/door/state` | door node | locked or unlocked |
-| `home/door/command` | server | lock or unlock |
-| `home/door/access` | door node | who tried, which method, success or fail |
-| `home/camera/event` | laptop AI | person, movement or fire, with confidence |
-| `home/security/armed` | server | true or false |
-| `home/alert` | server | type, message, time, snapshot |
-| `home/jarvis/say` | server | text for Jarvis to speak |
+The full list of message names and contents, which is the agreement between the hardware and
+software teams, is in `docs/CONTRACT.md`.
 
 ## Alert rules (draft)
 
