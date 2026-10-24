@@ -1,0 +1,28 @@
+# secrets
+.env
+*.key
+secrets.h
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# data and models
+*.db
+*.sqlite
+snapshots/
+models/
+*.pt
+*.onnx
+
+# editors and system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# arduino
+build/
