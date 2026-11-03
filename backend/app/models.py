@@ -17,12 +17,18 @@ class ActuatorCommand(Strict):
 
 class DoorCommand(Strict):
     action: Literal["lock", "unlock"]
+    # For unlock: how long the door stays open before the board locks it again.
+    seconds: float | None = Field(default=None, gt=0, le=30)
     # Who is asking. Voice may never unlock the door (see hub.py).
     source: Literal["app", "voice", "auto"] = "app"
 
 
 class ArmedCommand(Strict):
     armed: bool
+
+
+class JarvisRequest(Strict):
+    text: str = Field(min_length=1, max_length=200)
 
 
 class LabResult(Strict):

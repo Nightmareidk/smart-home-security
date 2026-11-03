@@ -26,6 +26,7 @@ SCENARIOS = {
     "dry": "Plant 1 dries out",
     "failed": "Three wrong keypad attempts at the door",
     "offline": "The plant board drops off the network for 15 seconds",
+    "clap": "Two claps: the sensor board switches the light and reports it",
 }
 
 
@@ -169,6 +170,16 @@ class House:
         self.world.locked = data["action"] == "lock"
         print(f"  door -> {'locked' if self.world.locked else 'UNLOCKED'}")
         self.send_door_state()
+        if data["action"] == "unlock":
+            # Like the real door board: lock again by itself after a few seconds.
+            seconds = data.get("seconds")
+            seconds = float(seconds) if isinstance(seconds, (int, float)) and 0 < seconds <= 30 else 5.0
+            threading.Timer(seconds / self.speed, self.relock).start()
+
+    def relock(self):
+        self.world.locked = True
+        print("  door -> locked (timer)")
+        self.send_door_state()
 
     # ---- scenarios ---------------------------------------------------------
 
@@ -219,6 +230,11 @@ class House:
             for _ in range(3):
                 self.door.send("home/door/access", {"method": "keypad", "success": False})
                 time.sleep(0.5)
+        elif name == "clap":
+            with w.lock:
+                w.actuators["light"] = not w.actuators["light"]
+            self.send_actuator_state("light")
+            print(f"  clap -> light {'ON' if w.actuators['light'] else 'off'}")
         elif name == "offline":
             w.plant_online = False
             self.plant.send("home/node/plant/status", {"online": False}, retain=True)

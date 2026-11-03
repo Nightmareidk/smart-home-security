@@ -63,6 +63,11 @@ npx expo start
 - **In a browser (quick look):** press `w`. Add `HOME_CORS_ORIGINS=["http://localhost:8081"]`
   to `backend/.env` so the browser is allowed to talk to the server.
 
+## Jarvis and the camera AI
+
+- Open the **Jarvis** tab in the app and type, for example, "turn on the fan" or "is there a mold risk?". Or, in a terminal, run `python ai\jarvis\chat.py` (with `HOME_API_TOKEN` set).
+- Camera AI: see `ai/vision/README.md`. Once set up, `.venv\Scripts\python main.py --source 0 --show` watches your webcam.
+
 ## What to try
 
 | Do this | You should see |

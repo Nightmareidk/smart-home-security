@@ -54,14 +54,15 @@ mold-risk numbers raise an alert in the app.
 - [ ] Alert history and a phone notification (Telegram).
 
 ### S4: Camera AI (laptop webcam first)
-- [ ] `ai/vision/`: people, movement, fire and smoke.
+- [x] `ai/vision/`: people from the webcam or camera stream (version 1). Fire and smoke need a trained model.
 - [ ] `ai/face/`: known faces, "who is home", strangers flagged.
 - [ ] Door access log (who, which method, success or fail).
 
 ### S5: Jarvis
 - [ ] `ai/jarvis/`: wake word, speech to text, language model, spoken replies.
-- [ ] Questions first, then control commands, then spoken alerts and scenes.
-- [ ] No unlocking by voice alone.
+- [x] Typed commands and questions (the app's Jarvis tab and `ai/jarvis/chat.py`), through `POST /api/jarvis`.
+- [x] No unlocking by voice or text, ever.
+- [ ] Speech to text, spoken replies, wake word, spoken alerts, scenes.
 
 ### S6: Join with the hardware (once the boards are ready)
 - [ ] Point the server at the real boards instead of the simulator.

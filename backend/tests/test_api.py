@@ -89,6 +89,16 @@ def test_door_cannot_be_unlocked_by_voice(client):
     assert client.post("/api/door", headers=AUTH, json={"action": "unlock", "source": "app"}).status_code == 200
 
 
+def test_unlock_always_has_a_re_lock_time(client):
+    client.post("/api/door", headers=AUTH, json={"action": "unlock", "source": "app"})
+    assert ("home/door/command", {"action": "unlock", "seconds": 5.0}) in client.published
+    client.post("/api/door", headers=AUTH, json={"action": "unlock", "seconds": 12})
+    assert client.published[-1][1]["seconds"] == 12
+    assert client.post("/api/door", headers=AUTH, json={"action": "unlock", "seconds": 600}).status_code == 422
+    client.post("/api/door", headers=AUTH, json={"action": "lock"})
+    assert client.published[-1][1] == {"action": "lock"}
+
+
 def test_commands_fail_cleanly_when_the_broker_is_down(client):
     client.hub.publish = lambda *a, **k: False
     assert client.post("/api/actuators/light", headers=AUTH, json={"action": "on"}).status_code == 503

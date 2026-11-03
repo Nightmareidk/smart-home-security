@@ -53,7 +53,7 @@ State messages are **retained**, so the server learns the current state straight
 
 | Topic | From | Body |
 |---|---|---|
-| `home/door/command` | server | `{"action": "lock"}` or `{"action": "unlock"}` |
+| `home/door/command` | server | `{"action": "lock"}` or `{"action": "unlock", "seconds": 5}`. **For unlock, `seconds` is how long the door stays open. The board locks itself again after that time** (default 5, never more than 30), and reports `locked: true`. |
 | `home/door/state` | door | `{"locked": true}` sent **retained** after every change, and when the board starts |
 | `home/door/access` | door | `{"method": "fingerprint", "user": "sara", "success": true}` for every attempt. `method` is `fingerprint`, `keypad`, `face` or `app`. `user` is left out when unknown. |
 
@@ -68,6 +68,22 @@ Topic: `home/camera/event`
 - `type`: `person`, `movement`, `fire`, `smoke` or `face`
 - `name`: who the face belongs to. Left out or `null` means a stranger.
 - `snapshot`: optional file name of the picture
+
+## Camera picture
+
+The camera board serves a live picture over Wi-Fi. The laptop AI reads it.
+
+| What | Address |
+|---|---|
+| Live picture (MJPEG video) | `http://<camera-ip>/stream` |
+| One still picture (JPEG) | `http://<camera-ip>/capture` |
+
+Default picture size 640 x 480. The camera board also sends its status like the other boards (`home/node/cam/status`).
+Until the camera board is ready, the AI can use the laptop webcam instead.
+
+## Claps
+
+Claps are handled **on the sensor board**. Two sharp claps within about one second switch the light itself. The board then reports it the normal way, with `home/actuator/light/state` (`{"on": true}`, retained). No separate message is needed, and the app and server simply see the light change.
 
 ## Security state (the server owns this)
 

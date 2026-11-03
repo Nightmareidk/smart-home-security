@@ -12,7 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import Settings
 from .db import Database
 from .hub import CommandFailed, CommandRefused, Hub
-from .models import ActuatorCommand, ActuatorName, ArmedCommand, DoorCommand, LabResult
+from . import jarvis
+from .models import ActuatorCommand, ActuatorName, ArmedCommand, DoorCommand, JarvisRequest, LabResult
 from .mqtt import MqttBridge
 from .version import __version__
 
@@ -150,6 +151,12 @@ async def door(cmd: DoorCommand, hub: HubDep):
 async def armed(cmd: ArmedCommand, hub: HubDep):
     await hub.set_armed(cmd.armed)
     return {"armed": cmd.armed}
+
+
+@app.post("/api/jarvis", dependencies=[Auth])
+async def ask_jarvis(req: JarvisRequest, hub: HubDep):
+    reply = await jarvis.run(hub, req.text)
+    return {"ok": reply.ok, "reply": reply.text, "intent": reply.intent}
 
 
 @app.get("/api/lab-results", dependencies=[Auth])

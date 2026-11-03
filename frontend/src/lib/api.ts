@@ -66,6 +66,7 @@ export function createApi(baseUrl: string, token: string) {
       post(`/api/actuators/${name}`, seconds ? { action, seconds } : { action }),
     setDoor: (action: 'lock' | 'unlock') => post('/api/door', { action, source: 'app' }),
     setArmed: (armed: boolean) => post('/api/armed', { armed }),
+    jarvis: (text: string) => post<{ ok: boolean; reply: string; intent: string }>('/api/jarvis', { text }),
     labResults: () => request<LabResult[]>('/api/lab-results'),
     addLabResult: (r: { result: LabResult['result']; target: string; notes: string; author: string }) =>
       post<{ id: number }>('/api/lab-results', r),

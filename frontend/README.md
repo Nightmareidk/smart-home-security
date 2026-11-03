@@ -7,7 +7,7 @@ The phone app that controls the house (React Native with Expo, TypeScript).
 | Home | Bathroom climate, mold-risk banner, security state, quick switches, latest alert |
 | Security | Arm and disarm, lock and unlock the door, who is home, door activity |
 | Plants | Soil moisture, water now, grow light |
-| Jarvis | Placeholder until the voice assistant is built |
+| Jarvis | Chat with Jarvis by typing (voice comes later) |
 | Alerts | Alert history, with "Got it" |
 
 Also: a Settings screen (server address and token, kept in the phone's secure storage) and a

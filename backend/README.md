@@ -15,12 +15,13 @@ The server on the laptop (Python, FastAPI). It:
 | `app/main.py` | The web routes, token check and rate limit |
 | `app/hub.py` | The middle: takes in messages, runs commands, raises alerts |
 | `app/rules.py` | The alert rules (pure logic, easy to test) |
+| `app/jarvis.py` | Jarvis: turns a typed or spoken sentence into one allowed action, and the answers |
 | `app/state.py` | The current picture of the house, with checks on every incoming value |
 | `app/db.py` | SQLite storage |
 | `app/mqtt.py` | The broker connection (reconnects by itself) |
 | `app/config.py` | Settings, read from environment variables starting with `HOME_` |
 | `tools/dev_broker.py` | A tiny broker for development |
-| `tests/` | 30 tests: `python -m pytest` |
+| `tests/` | 65 tests: `python -m pytest` |
 
 ## Safety rules built in
 

@@ -18,6 +18,7 @@ ACCESS_METHODS = {"fingerprint", "keypad", "face", "app"}
 CAMERA_TYPES = {"person", "movement", "fire", "smoke", "face"}
 PUMP_MAX_SECONDS = 60.0
 PUMP_DEFAULT_SECONDS = 10.0
+DOOR_UNLOCK_DEFAULT_SECONDS = 5.0
 
 Publish = Callable[..., bool]
 
@@ -197,11 +198,15 @@ class Hub:
     def set_door(self, cmd: DoorCommand) -> dict:
         if cmd.action == "unlock" and cmd.source == "voice":
             raise CommandRefused("The door cannot be unlocked by voice. Use the app, fingerprint, keypad or face.")
-        if not self.publish("home/door/command", {"action": cmd.action}):
+        payload: dict = {"action": cmd.action}
+        if cmd.action == "unlock":
+            # The board locks the door again by itself, so it is never left open.
+            payload["seconds"] = cmd.seconds or DOOR_UNLOCK_DEFAULT_SECONDS
+        if not self.publish("home/door/command", payload):
             raise CommandFailed("Could not reach the house. Is the broker running?")
         if cmd.action == "unlock":
             self.db.add_access(self.now(), "app", None, True)
-        return {"action": cmd.action}
+        return payload
 
     async def set_armed(self, armed: bool) -> None:
         self.state.armed = armed
