@@ -147,3 +147,33 @@ def test_state_rejects_nonsense_readings():
     assert not state.apply_env({"temp_c": True, "humidity": 50}, 0)
     assert not state.apply_soil({"plants": "oops"}, 0)
     assert state.apply_env({"temp_c": 24, "humidity": 50}, 0)
+
+
+def test_unknown_face_is_an_intruder_when_armed():
+    state, engine = make()
+    state.armed = True
+    alerts = engine.on_camera({"type": "face", "confidence": 0.9}, 0)
+    assert alerts and alerts[0].type == "intrusion"
+
+
+def test_known_face_is_never_an_alert_and_is_marked_home():
+    state, engine = make()
+    state.armed = True
+    assert engine.on_camera({"type": "face", "confidence": 0.9, "name": "sara"}, 0) == []
+    assert "sara" in state.people
+
+
+def test_unnamed_person_right_after_a_known_person_is_the_same_person():
+    state, engine = make()
+    state.armed = True
+    engine.on_camera({"type": "face", "confidence": 0.9, "name": "sara"}, 100)
+    assert engine.on_camera({"type": "person", "confidence": 0.9}, 105) == []
+    # a long time later the same kind of sighting counts again
+    assert engine.on_camera({"type": "person", "confidence": 0.9}, 200)[0].type == "intrusion"
+
+
+def test_unknown_face_still_counts_even_just_after_a_known_person():
+    state, engine = make()
+    state.armed = True
+    engine.on_camera({"type": "face", "confidence": 0.9, "name": "sara"}, 100)
+    assert engine.on_camera({"type": "face", "confidence": 0.9}, 102)[0].type == "intrusion"

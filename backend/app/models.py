@@ -20,7 +20,9 @@ class DoorCommand(Strict):
     # For unlock: how long the door stays open before the board locks it again.
     seconds: float | None = Field(default=None, gt=0, le=30)
     # Who is asking. Voice may never unlock the door (see hub.py).
-    source: Literal["app", "voice", "auto"] = "app"
+    source: Literal["app", "voice", "auto", "face"] = "app"
+    # Who opened it (needed for face unlock, so the door log says who).
+    user: str | None = Field(default=None, min_length=1, max_length=40)
 
 
 class ArmedCommand(Strict):

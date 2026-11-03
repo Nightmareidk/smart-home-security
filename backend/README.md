@@ -21,7 +21,7 @@ The server on the laptop (Python, FastAPI). It:
 | `app/mqtt.py` | The broker connection (reconnects by itself) |
 | `app/config.py` | Settings, read from environment variables starting with `HOME_` |
 | `tools/dev_broker.py` | A tiny broker for development |
-| `tests/` | 65 tests: `python -m pytest` |
+| `tests/` | 70 tests: `python -m pytest` |
 
 ## Safety rules built in
 

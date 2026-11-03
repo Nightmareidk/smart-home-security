@@ -65,6 +65,8 @@ def run(args, person, fire):
     from publisher import EventPublisher
 
     publisher = None if args.dry_run else EventPublisher(args.host, args.port)
+    if publisher:
+        publisher.wait_until_connected()
     person_gate = Confirmer(args.frames, args.cooldown)
     fire_gate = Confirmer(args.frames, args.cooldown)
     snapshots = Path(args.snapshots)

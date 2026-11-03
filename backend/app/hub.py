@@ -202,10 +202,16 @@ class Hub:
         if cmd.action == "unlock":
             # The board locks the door again by itself, so it is never left open.
             payload["seconds"] = cmd.seconds or DOOR_UNLOCK_DEFAULT_SECONDS
+        if cmd.action == "unlock" and cmd.source == "face" and not cmd.user:
+            raise CommandRefused("Face unlock needs the name of the person.")
         if not self.publish("home/door/command", payload):
             raise CommandFailed("Could not reach the house. Is the broker running?")
         if cmd.action == "unlock":
-            self.db.add_access(self.now(), "app", None, True)
+            now = self.now()
+            method = "face" if cmd.source == "face" else "app"
+            self.db.add_access(now, method, cmd.user, True)
+            if cmd.user:
+                self.state.mark_present(cmd.user, now)
         return payload
 
     async def set_armed(self, armed: bool) -> None:

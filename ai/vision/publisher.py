@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 
 import paho.mqtt.client as mqtt
 
@@ -26,6 +27,13 @@ class EventPublisher:
     def _on_disconnect(self, client, userdata, flags, reason_code, properties=None):
         self.connected = False
         log.warning("Lost the broker, will retry")
+
+    def wait_until_connected(self, timeout: float = 3.0) -> bool:
+        """Give the broker a moment to answer, so the very first event is not lost."""
+        end = time.time() + timeout
+        while not self.connected and time.time() < end:
+            time.sleep(0.05)
+        return self.connected
 
     def publish(self, event: dict) -> bool:
         if not self.connected:

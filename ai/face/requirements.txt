@@ -1,0 +1,4 @@
+opencv-python>=4.9
+numpy
+paho-mqtt>=2.1
+pytest>=8

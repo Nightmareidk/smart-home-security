@@ -68,6 +68,11 @@ npx expo start
 - Open the **Jarvis** tab in the app and type, for example, "turn on the fan" or "is there a mold risk?". Or, in a terminal, run `python ai\jarvis\chat.py` (with `HOME_API_TOKEN` set).
 - Camera AI: see `ai/vision/README.md`. Once set up, `.venv\Scripts\python main.py --source 0 --show` watches your webcam.
 
+## Faces
+
+See `ai/face/README.md`. In short: `python enrol.py add NAME --source 0` (with their written consent), then
+`python main.py --source 0 --show` to recognise people.
+
 ## What to try
 
 | Do this | You should see |

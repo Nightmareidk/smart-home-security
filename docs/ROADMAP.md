@@ -55,8 +55,8 @@ mold-risk numbers raise an alert in the app.
 
 ### S4: Camera AI (laptop webcam first)
 - [x] `ai/vision/`: people from the webcam or camera stream (version 1). Fire and smoke need a trained model.
-- [ ] `ai/face/`: known faces, "who is home", strangers flagged.
-- [ ] Door access log (who, which method, success or fail).
+- [x] `ai/face/`: known faces, "who is home", strangers flagged, and optional door opening by face.
+- [x] Door access log (who, which method, success or fail), including face.
 
 ### S5: Jarvis
 - [ ] `ai/jarvis/`: wake word, speech to text, language model, spoken replies.

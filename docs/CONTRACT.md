@@ -67,6 +67,8 @@ Topic: `home/camera/event`
 
 - `type`: `person`, `movement`, `fire`, `smoke` or `face`
 - `name`: who the face belongs to. Left out or `null` means a stranger.
+- A `face` event with a `name` is a recognised person: the server marks them as home. A `face` event with no name is a stranger's face (an intruder alert if the system is armed).
+- A `person` event with no name, seen within 15 seconds of a recognised person, is treated as that same person and raises no alert.
 - `snapshot`: optional file name of the picture
 
 ## Camera picture

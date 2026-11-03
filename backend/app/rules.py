@@ -104,12 +104,19 @@ class RuleEngine:
             if confident and self._cooldown_ok("fire", now, 30):
                 return [Alert("fire", "critical", f"Camera sees {kind}.", data, speak=True)]
             return []
-        if kind == "person" and not name and confident:
+        if kind in ("person", "face") and not name and confident:
+            # A shape with no name right after a known person is almost certainly the same person.
+            # An unknown FACE is stronger evidence, so it always counts.
+            if kind == "person" and self._known_recently(now):
+                return []
             if self.state.armed and self._cooldown_ok("intrusion", now, 20):
                 return [Alert("intrusion", "critical", "Possible intruder: unknown person while the system is armed.", data, speak=True)]
             if self._cooldown_ok("unknown_person", now, 60):
                 return [Alert("unknown_person", "info", "An unknown person was seen by the camera.", data)]
         return []
+
+    def _known_recently(self, now: float) -> bool:
+        return any(now - seen <= self.s.known_grace_seconds for seen in self.state.people.values())
 
     def on_access(self, event: dict, now: float) -> list[Alert]:
         success = event.get("success")

@@ -99,6 +99,18 @@ def test_unlock_always_has_a_re_lock_time(client):
     assert client.published[-1][1] == {"action": "lock"}
 
 
+def test_face_unlock_is_logged_with_the_name_and_marks_them_home(client):
+    r = client.post("/api/door", headers=AUTH, json={"action": "unlock", "source": "face", "user": "sara"})
+    assert r.status_code == 200
+    log = client.get("/api/access", headers=AUTH).json()
+    assert log[0]["method"] == "face" and log[0]["user"] == "sara" and log[0]["success"] is True
+    people = client.get("/api/state", headers=AUTH).json()["people"]
+    assert any(p["name"] == "sara" and p["present"] for p in people)
+    # a face unlock without a name is refused
+    r = client.post("/api/door", headers=AUTH, json={"action": "unlock", "source": "face"})
+    assert r.status_code == 403
+
+
 def test_commands_fail_cleanly_when_the_broker_is_down(client):
     client.hub.publish = lambda *a, **k: False
     assert client.post("/api/actuators/light", headers=AUTH, json={"action": "on"}).status_code == 503

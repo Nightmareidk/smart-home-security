@@ -35,6 +35,8 @@ class Settings(BaseSettings):
     failed_unlock_window: float = 60.0
     alert_cooldown: float = 60.0
     present_timeout: float = 600.0
+    # An unnamed "person" seen this soon after a known person is treated as that same person.
+    known_grace_seconds: float = 15.0
 
     @model_validator(mode="after")
     def _token_must_be_set_outside_dev(self):

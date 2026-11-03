@@ -29,3 +29,6 @@ build/
 
 # server data
 backend/data/
+
+# enrolled faces never go to GitHub
+ai/face/data/
