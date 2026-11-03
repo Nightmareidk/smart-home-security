@@ -2,6 +2,14 @@
 
 How versions work is in `CONTRIBUTING.md`. Newest first.
 
+## Beta 1.3
+
+- **Jarvis has a voice** (`ai/jarvis/voice.py`): say "Hey Jarvis", then a command or a question. It listens (Whisper, on this laptop), the house server understands and acts, and Jarvis answers out loud (Piper). Nothing is recorded or kept.
+- **Spoken alerts:** fire, intruder, mold risk and door alerts are spoken on their own, without repeating the same sentence within 20 seconds.
+- **Push-to-talk and file modes** for testing, and a clear warning when Windows picks a silent virtual microphone or speaker.
+- Tested with spoken test sentences, the wake word on synthetic speech, and the simulator. **Not yet tested with a real person speaking.**
+- Tests: 70 server, 12 face, 6 camera AI, 8 voice.
+
 ## Beta 1.2
 
 - **Face recognition** (`ai/face/`): enrol people (with consent), recognise them on a camera, and report their name. Known people show as Home in the app. Unknown faces raise an intruder alert when the system is armed.

@@ -62,7 +62,8 @@ mold-risk numbers raise an alert in the app.
 - [ ] `ai/jarvis/`: wake word, speech to text, language model, spoken replies.
 - [x] Typed commands and questions (the app's Jarvis tab and `ai/jarvis/chat.py`), through `POST /api/jarvis`.
 - [x] No unlocking by voice or text, ever.
-- [ ] Speech to text, spoken replies, wake word, spoken alerts, scenes.
+- [x] Speech to text (Whisper), spoken replies (Piper), the "Hey Jarvis" wake word, and spoken alerts (`ai/jarvis/voice.py`).
+- [ ] Test the voice with real people, then scenes, greetings and reminders.
 
 ### S6: Join with the hardware (once the boards are ready)
 - [ ] Point the server at the real boards instead of the simulator.
